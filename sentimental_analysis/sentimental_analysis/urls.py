@@ -37,6 +37,7 @@ urlpatterns = [
     re_path(r'^livespeechanalysis',realworld.views.livespeechanalysis,name = 'live speech analysis'),
     re_path(r'^fbanalysis',realworld.views.fbanalysis,name = 'fb analysis'),
     re_path(r'^twitteranalysis',realworld.views.twitteranalysis,name = 'twitter analysis'),
+    re_path(r'^redditanalysis',realworld.views.redditanalysis,name = 'reddit analysis'),
     re_path(r'^recordAudio', realworld.views.recordaudio, name = 'recordAudio'),
     re_path(r'^newsanalysis',realworld.views.newsanalysis,name = 'news analysis')
 ]
