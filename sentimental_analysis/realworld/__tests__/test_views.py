@@ -2,7 +2,8 @@ import unittest
 import os, sys
 SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
 sys.path.append(os.path.dirname(SCRIPT_DIR))
-from views import detailed_analysis_sentence
+# from views import detailed_analysis_sentence
+from sentimental_analysis.realworld.views import detailed_analysis_sentence
 class TestViews(unittest.TestCase):
     
     def test_detailed_analysis_sentence_negative_sentence(self):
