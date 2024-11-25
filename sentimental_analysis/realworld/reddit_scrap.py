@@ -40,3 +40,26 @@ def reddit_sentiment_score(data):
     print(f"Sentiment Scores: {sentiment_scores}")
     return sentiment_scores
 
+def fetch_reddit_post(post_url):
+    """
+    Fetch the content of a specific Reddit post using its URL.
+    """
+    reddit = praw.Reddit(
+        client_id='AF9XaDY8GlUIhRq95N2oOA',       # Replace with your Reddit API client ID
+        client_secret='op-VwMxSOaIOtf-xpAgO23CZudiJDA', # Replace with your Reddit API client secret
+        user_agent='reddit_sentiment_analysis:v1.0 (by u/Material-Star-1043)'     # Replace with your user agent
+    )
+
+    # Fetch the specific post using the URL
+    submission = reddit.submission(url=post_url)
+    post_content = {
+        "title": submission.title,
+        "body": submission.selftext,
+        "comments": [comment.body for comment in submission.comments.list()[:10]],  # Fetch top 10 comments
+    }
+
+    print("Post Content:")
+    print(f"Title: {post_content['title']}")
+    print(f"Body: {post_content['body']}")
+    print(f"Top Comments: {post_content['comments']}")
+    return post_content
