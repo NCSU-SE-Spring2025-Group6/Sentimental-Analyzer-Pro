@@ -24,6 +24,7 @@ from realworld.utilityFunctions import *
 from nltk.corpus import stopwords
 from realworld.fb_scrap import *
 from realworld.twitter_scrap import *
+from realworld.reddit_scrap import *
 import cv2
 from deepface import DeepFace
 from langdetect import detect
@@ -342,6 +343,31 @@ def twitteranalysis(request):
     else:
         note = "Please Enter the product blog link for analysis"
         return render(request, 'realworld/productanalysis.html', {'note': note})
+    
+def redditanalysis(request):
+    if request.method == 'POST':
+        blogname = request.POST.get("blogname", "")  # Get the Reddit post URL from the form
+        fetched_data = fetch_reddit_post(blogname)  # Fetch the Reddit post details
+
+        # Combine the fetched data (title, body, comments) into a single list for analysis
+        data = [fetched_data["title"], fetched_data["body"]] + fetched_data["comments"]
+        # Perform sentiment analysis
+        result = reddit_sentiment_score(data)
+
+        # Combine the title, body, and comments into a single list for displaying on the results page
+        reviews = [f"Title: {fetched_data['title']}", f"Body: {fetched_data['body']}"] + fetched_data["comments"]
+
+        return render(request, 'realworld/results.html', {
+            'sentiment': result,  # Sentiment analysis result
+            'text': reviews,      # Display the text analyzed (title, body, comments)
+            'reviewsRatio': {},   # Placeholder (optional, for further analysis)
+            'totalReviews': len(reviews),  # Total number of items analyzed
+            'showReviewsRatio': False
+        })
+    else:
+        note = "Enter the Reddit post URL for analysis"
+        return render(request, 'realworld/redditanalysis.html', {'note': note})
+
 
 def audioanalysis(request):
     if request.method == 'POST':
@@ -371,7 +397,6 @@ def audioanalysis(request):
         note = "Please Enter the audio file you want to analyze"
         return render(request, 'realworld/audio.html', {'note': note})
 
-
 def livespeechanalysis(request):
     if request.method == 'POST':
         my_file_handle = open(
@@ -389,7 +414,6 @@ def livespeechanalysis(request):
             if os.path.isfile(file_path):
                 os.remove(file_path)
         return render(request, 'realworld/results.html', {'sentiment': result, 'text' : finalText, 'reviewsRatio': {}, 'totalReviews': 1, 'showReviewsRatio': False})
-
 
 
 @csrf_exempt
