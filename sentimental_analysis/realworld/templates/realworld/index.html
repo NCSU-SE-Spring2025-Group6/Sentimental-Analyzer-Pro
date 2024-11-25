@@ -404,7 +404,7 @@
                         <h2 class="section-title">Reddit Analysis</h2>
                         <form action = "{% url "reddit analysis" %}" method = "post">
                         {% csrf_token %}
-                        <label for="blogname" class="form-label">Paste Twitter URL:</label>
+                        <label for="blogname" class="form-label">Paste Reddit URL:</label>
                         <input type="text" id="blogname" class="line-edit" name="blogname" required>
                         <button type="submit" id = "myButton"class="button">Analyze</button>
                         <div id="message" class="hidden">Wait till the results are generated.</div>
