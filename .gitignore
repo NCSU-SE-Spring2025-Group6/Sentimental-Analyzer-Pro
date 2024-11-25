@@ -50,3 +50,7 @@ env/
 /sentimental_analysis/db.sqlite3
 
 /sentimental_analysis/realworld/news.json
+
+# Cache files and miscellaneous  
+*.json
+/sentimental_analysis/realworld/ProductAnalysis.txt
