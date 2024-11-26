@@ -13,3 +13,14 @@ COPY requirements.txt .
 RUN pip install -r requirements.txt
 
 RUN python -c "import nltk; nltk.download('punkt'); nltk.download('stopwords'); nltk.download('averaged_perceptron_tagger')"
+
+COPY . .
+
+
+
+
+ENV PYTHONDONTWRITEBYTECODE=1
+ENV PYTHONUNBUFFERED=1
+ENV DJANGO_ALLOWED_HOSTS=0.0.0.0,localhost
+
+
