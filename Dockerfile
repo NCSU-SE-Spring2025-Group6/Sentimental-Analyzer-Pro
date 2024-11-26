@@ -16,11 +16,10 @@ RUN python -c "import nltk; nltk.download('punkt'); nltk.download('stopwords'); 
 
 COPY . .
 
-
+RUN python sentimental_analysis/manage.py makemigrations
+RUN python sentimental_analysis/manage.py migrate
 
 
 ENV PYTHONDONTWRITEBYTECODE=1
 ENV PYTHONUNBUFFERED=1
 ENV DJANGO_ALLOWED_HOSTS=0.0.0.0,localhost
-
-
