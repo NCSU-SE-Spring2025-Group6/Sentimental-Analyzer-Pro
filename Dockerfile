@@ -23,3 +23,7 @@ RUN python sentimental_analysis/manage.py migrate
 ENV PYTHONDONTWRITEBYTECODE=1
 ENV PYTHONUNBUFFERED=1
 ENV DJANGO_ALLOWED_HOSTS=0.0.0.0,localhost
+
+EXPOSE 8000
+
+CMD ["python", "sentimental_analysis/manage.py", "runserver", "0.0.0.0:8000"]
