@@ -2,7 +2,7 @@
 ## Software Engineering Project for CSC 510
 
 [![DOI](https://zenodo.org/badge/869224666.svg)](https://doi.org/10.5281/zenodo.14004708)
-[![GitHub Release](https://img.shields.io/github/v/release/ychen-207523/Sentimental-Analyzer-Pro)](https://github.com/ychen-207523/Sentimental-Analyzer-Pro/releases)
+[![GitHub Release](https://img.shields.io/github/v/release/jayjoshi1400/Sentimental-Analyzer-Pro)](https://github.com/jayjoshi1400/Sentimental-Analyzer-Pro/releases)
 [![Build](https://github.com/jayjoshi1400/Sentimental-Analyzer-Pro/actions/workflows/main.yml/badge.svg)](https://github.com/jayjoshi1400/Sentimental-Analyzer-Pro/actions/workflows/main.yml)
 [![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](https://opensource.org/licenses/MIT)
 [![Python](https://img.shields.io/badge/python-v3.11+-brightgreen.svg)](https://www.python.org/)
@@ -89,6 +89,7 @@ Although HTML and CSS are used for the front end, the users can merge the backen
 |Live Sentimental Analysis   |``` Sentimental analysis of live recorded audio``` |
 |Facebook Post Analysis   |``` Sentimental analysis of Facebook Post``` |
 |Twitter Post Analysis   |``` Sentimental analysis of Twitter Post``` |
+|Reddit Post Analysis   |``` Sentimental analysis of Reddit Post``` |
 ---
 
 <a name="exec"></a>
@@ -96,7 +97,7 @@ Although HTML and CSS are used for the front end, the users can merge the backen
 ### Installation
 1. Clone this project:
 ```
-git clone https://github.com/ychen-207523/Sentimental-Analyzer-Pro.git 
+git clone https://github.com/jayjoshi1400/Sentimental-Analyzer-Pro.git 
 ```
 2. Make sure you are using Python 3.10 or higher. You can get it here: https://www.python.org/downloads/release/python-3115/
 
@@ -108,7 +109,7 @@ source env/bin/activate
 4. Install dependencies for the project from the root directory of the project:
 ```
 pip3 install -r requirements.txt
-python -c "import nltk; nltk.download('punkt'); nltk.download('stopwords')"
+python -c "import nltk; nltk.download('punkt'); nltk.download('stopwords'); nltk.download('averaged_perceptron_tagger')"
 ```
 5. Install ffmpeg:  
 For Windows:  
@@ -123,9 +124,11 @@ For Mac:
 ```
 brew install ffmpeg
 ```   
-6. Run Django Server using manage.py (Note: Make sure you are in root directory of the project.)
+6. Run the migrations and start the Django Server using manage.py (Note: Make sure you are in root directory of the project.)
 ```
-python3 .\sentimental_analysis\manage.py runserver
+python3 ./sentimental_analysis/manage.py makemigrations
+python3 ./sentimental_analysis/manage.py migrate
+python3 ./sentimental_analysis/manage.py runserver
 ```
 7. Next, open your browser and type in `localhost:8000` in the search bar to open the user interface of the application.
    
@@ -196,7 +199,7 @@ We have done a Case Study for our Sentiment Analysis Project. It can be found [h
 ---
 <a name="contribute"></a>
 ## Eager to Contribute?
-To Contribute to our application, please refer to [CONTRIBUTING.md](https://github.com/ychen-207523/Sentimental-Analyzer-Pro/blob/master/CONTRIBUTING.md)
+To Contribute to our application, please refer to [CONTRIBUTING.md](https://github.com/jayjoshi1400/Sentimental-Analyzer-Pro/blob/master/CONTRIBUTING.md)
 
 ---
 <a name="Connectwithus"></a>
@@ -214,14 +217,14 @@ To Contribute to our application, please refer to [CONTRIBUTING.md](https://gith
 <a name="team"></a>
 ## Team Members
 
-- Yunfei Chen
-- Tanuj Kulkarni
-- Shubham Vijay Tidke
+- Jay Joshi
+- Dinesh Pasupuleti
+- Srivradhan Vura
 
 ## Citation
 
 This project is a fork of [Sentimental-Analyzer-Pro](https://github.com/NehaSJ99/Sentimental-Analyzer-Pro) by ***NehaSJ99***.<br>
-Forked on: ***08 Oct 2024***<br>
+Forked on: ***14 Nov 2024***<br>
 Original Commit Hash: ***d11a4871660aa0a26f31764d150c87f2bd5d0586***
 
 **Note:** This is an unfunded, non-profit project created for educational purposes.
