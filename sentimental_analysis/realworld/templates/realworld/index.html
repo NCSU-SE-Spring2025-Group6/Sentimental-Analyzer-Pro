@@ -267,6 +267,7 @@
                   <div class="col-1">
                      <div class="section-heading">
                         <h2 class="section-title">Product Analysis</h2>
+                        <p class="section-subtitle">Paste the Amazon URL and Sentiment Analyzer Pro will analyze the comments and report back the sentiments.</p>
                         <form action = "{% url "product analysis" %}" method = "post">
                         {% csrf_token %}
                         <label for="blogname" class="form-label">Paste Amazon URL:</label>
@@ -283,6 +284,7 @@
                   <div class="col-1" style="padding-left: 0px;">
                      <div class="section-heading">
                         <h2 class="section-title">Image Analysis</h2>
+                        <p class="section-subtitle">Upload an Image and Sentiment Analyzer Pro will analyze the image and report back the sentiments felt by the person like  happy, sad, etc.</p>
                         <form action = "{% url "inputimage" %}" method = "post" enctype="multipart/form-data">
                         {% csrf_token %}    
                         <label for="text" class="drop-container" id="dropcontainer">
@@ -302,6 +304,7 @@
                   <div class="col-1">
                      <div class="section-heading">
                         <h2 class="section-title">News Analysis</h2>
+                        <p class="section-subtitle">Type the news topic and Sentiment Analyzer Pro will analyze the news.</p>
                         <form action = "{% url "news analysis" %}" method = "post">
                         {% csrf_token %}
                         <label for="blogname" class="form-label">Topic Name:</label>
@@ -318,6 +321,7 @@
                   <div class="col-1" style="padding-left: 0px;">
                      <div class="section-heading">
                         <h2 class="section-title">Document Analysis</h2>
+                        <p class="section-subtitle">Upload a pdf or docx file and Sentiment Analyzer Pro will analyze the text in it and report back the sentiments.</p>
                         <form action = "{% url "input" %}" method = "post" enctype="multipart/form-data">
                         {% csrf_token %}    
                         <label for="text" class="drop-container" id="dropcontainer">
@@ -352,6 +356,7 @@
                    <div class="col-1" style="padding-left: 0px;">
                        <div class="section-heading">
                            <h2 class="section-title">Text Analysis</h2>
+                           <p class="section-subtitle">Type the text you want to analyze and Sentiment Analyzer Pro will report back the sentiments.</p>
                            
                            <!-- Single Text Analysis -->
                            <form action="{% url 'text analysis' %}" method="post" enctype="multipart/form-data">
@@ -377,6 +382,7 @@
                   <div class="col-1" style="padding-left: 0px;">
                      <div class="section-heading">
                         <h2 class="section-title">Audio Analysis</h2>
+                        <p class="section-subtitle">Upload an audio file and Sentiment Analyzer Pro will analyze the audio and report back the sentiments.</p>
                         <form action = "{% url "audio analysis" %}" method = "post" enctype="multipart/form-data">
                         {% csrf_token %}    
                         <label for="audio" class="drop-container" id="dropcontainer">
@@ -396,6 +402,7 @@
                   <div class="col-1" style="padding-left: 0px;">
                      <div class="section-heading">
                         <h2 class="section-title">Live Speech Analysis</h2>
+                        <p class="section-subtitle">Record a live speech and Sentiment Analyzer Pro will analyze a live speech and report back the sentiments.</p>
                         <form action = "{% url "live speech analysis" %}" method = "post" enctype="multipart/form-data">
                         {% csrf_token %}
                         <input type="file" name="liveaudioFile" accept="audio/*" capture="microphone" id="audio-input" style="display: none">
@@ -414,6 +421,7 @@
                   <div class="col-1">
                      <div class="section-heading">
                         <h2 class="section-title">Facebook Analysis</h2>
+                        <p class="section-subtitle">Paste the Facebook URL and Sentiment Analyzer Pro will analyze the comments and report back the sentiments.</p>
                         <form action = "{% url "fb analysis" %}" method = "post">
                         {% csrf_token %}
                         <label for="blogname" class="form-label">Paste facebook URL:</label>
@@ -430,6 +438,7 @@
                   <div class="col-1">
                      <div class="section-heading">
                         <h2 class="section-title">Twitter Analysis</h2>
+                        <p class="section-subtitle">Paste the Twitter URL and Sentiment Analyzer Pro will analyze the comments and report back the sentiments.</p>
                         <form action = "{% url "twitter analysis" %}" method = "post">
                         {% csrf_token %}
                         <label for="blogname" class="form-label">Paste Twitter URL:</label>
@@ -446,6 +455,7 @@
                   <div class="col-1">
                      <div class="section-heading">
                         <h2 class="section-title">Reddit Analysis</h2>
+                        <p class="section-subtitle">Paste the Reddit URL and Sentiment Analyzer Pro will analyze the comments and report back the sentiments.</p>
                         <form action = "{% url "reddit analysis" %}" method = "post">
                         {% csrf_token %}
                         <label for="blogname" class="form-label">Paste Reddit URL:</label>
@@ -463,13 +473,13 @@
             <div class="row clearfix">
               <div class="col-2">
                 <p id="dev">
-                    &copy; Developed by Team 58: <a href="https://github.com/jayjoshi1400/Sentimental-Analyzer-Pro">Sentimental-Analyzer-Pro</a>
+                    &copy; Extended by Team 06: <a href="https://github.com/NCSU-SE-Spring2025-Group6/Sentimental-Analyzer-Pro.git">Sentimental-Analyzer-Pro</a>
                 </p>
               </div>
               <div class="col-2 disclaimer">
                 <div class="team-members">
                   <p>Team Members:</p>
-                    <p>Jay Joshi&nbsp; Dinesh Pasupuleti &nbsp; Srivardhan Vura</p>
+                    <p>Md Jakaria&nbsp; 	Autumn Wright</p>
                 </div>
               </div>
             </div>
