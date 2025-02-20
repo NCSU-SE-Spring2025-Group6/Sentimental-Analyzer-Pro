@@ -32,6 +32,7 @@ For Linux (Ubuntu):
 sudo apt install ffmpeg
 ```  
 For Mac:  
+*For brew installation help, checkout [Brew Installation help](https://www.digitalocean.com/community/tutorials/how-to-install-and-use-homebrew-on-macos)*
 ```
 brew install ffmpeg
 ```   

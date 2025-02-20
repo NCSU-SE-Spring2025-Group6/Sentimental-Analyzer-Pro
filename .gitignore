@@ -50,3 +50,7 @@ env/
 /sentimental_analysis/db.sqlite3
 
 /sentimental_analysis/realworld/news.json
+
+# Ignore data files
+/Amazon_Comments_Scrapper/amazon_reviews_scraping/amazon_reviews_scraping/spiders/reviews.json
+/Amazon_Comments_Scrapper/amazon_reviews_scraping/amazon_reviews_scraping/spiders/ProductAnalysis.txt

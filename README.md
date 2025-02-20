@@ -115,7 +115,7 @@ For Windows:
 set DJANGO_ALLOWED_HOSTS=0.0.0.0,localhost,127.0.0.1
 ```
 
-For Linux (Ubuntu) and Max:
+For Linux (Ubuntu) and Mac:
 ```
 export DJANGO_ALLOWED_HOSTS=0.0.0.0,localhost,127.0.0.1
 ```
