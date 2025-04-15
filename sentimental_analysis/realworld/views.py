@@ -53,8 +53,10 @@ from realworld.history_manager import (
     store_facebook_data,
     store_twitter_data,
     store_reddit_data,
-    store_product_analysis
+    store_product_analysis,
+    store_youtube_data
 )
+from realworld.youtube_scrap import get_transcript, get_top_liked_comments
 
 SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
 sys.path.append(os.path.dirname(SCRIPT_DIR))
@@ -139,6 +141,8 @@ def settings_view(request):
     return render(request, 'realworld/settings.html')
 
 
+from datetime import datetime
+
 def history_view(request):
     user = get_user(request)
     username = user.username
@@ -156,11 +160,70 @@ def history_view(request):
         with open(file_path, 'r') as json_file:
             history_data = json.load(json_file)
 
+        # Add formatted timestamp to each entry
+        for section, records in history_data.items():
+            for timestamp, record in records.items():
+                try:
+                    dt = datetime.strptime(timestamp, "%Y-%m-%d %H:%M:%S")
+                    formatted = dt.strftime("%b %d, %Y at %I:%M %p")
+                    record['formatted_time'] = formatted
+                except Exception:
+                    record['formatted_time'] = timestamp  # fallback
+
+    # Flatten and sort the history data by timestamp
+    sorted_history = []
+    for section, records in history_data.items():
+        for timestamp, data in records.items():
+            sorted_history.append({
+                'section': section,
+                'timestamp': timestamp,
+                'data': data
+            })
+    sorted_history.sort(key=lambda x: x['timestamp'], reverse=True)  # Sort by timestamp (most recent first)
+
     return render(
         request,
         'realworld/history.html',
-        {'history_data': history_data}
+        {'sorted_history': sorted_history}
     )
+
+@csrf_exempt
+@login_required
+def delete_history_entry(request):
+    if request.method == 'POST':
+        timestamp = request.POST.get('timestamp')
+        section = request.POST.get('section')
+
+        user = get_user(request)
+        username = user.username
+
+        # Define the file path
+        file_path = os.path.join(
+            "sentimental_analysis",
+            "media",
+            "user_data",
+            f"{username}.json"
+        )
+
+        if os.path.exists(file_path):
+            with open(file_path, 'r') as json_file:
+                history_data = json.load(json_file)
+
+            # Remove the entry from the specified section
+            if section in history_data and timestamp in history_data[section]:
+                del history_data[section][timestamp]
+
+                # Save the updated data back to the file
+                with open(file_path, 'w') as json_file:
+                    json.dump(history_data, json_file, indent=4)
+
+                messages.success(request, "History entry deleted successfully.")
+            else:
+                messages.error(request, "History entry not found.")
+        else:
+            messages.error(request, "User history file not found.")
+
+        return redirect('history')  # Redirect back to the history page
 
 
 def pdfparser(data):
@@ -473,7 +536,7 @@ def productanalysis(request):
         )
 
 
-def textanalysis(request):
+def textanalysis(request): # unused now
     if request.method == 'POST':
         text_data = request.POST.get("textField", "")
         final_comment = text_data.split('.')
@@ -517,65 +580,170 @@ def textanalysis(request):
         note = "Enter the Text to be analysed!"
         return render(request, 'realworld/textanalysis.html', {'note': note})
 
-
 def batch_analysis(request):
     if request.method == 'POST':
-        texts = request.POST.get("batchTextField", "").split('\n')
-        texts = [t.strip() for t in texts if t.strip()]
+        full_text_data = request.POST.get("batchTextField", "")
+        # sentences = full_text_data.split('.')
+        sentences = nltk.sent_tokenize(full_text_data) # better than splitting by period (accomodates abbreviations like U.S.A.)
+        results = []
 
-        # Initialize aggregate sentiment scores
-        total_sentiment = {
-            'pos': 0.0,
-            'neg': 0.0,
-            'neu': 0.0
-        }
+        for sentence in sentences:
+            cleaned_sentence = sentence.strip()
+            if cleaned_sentence:
+                if determine_language([cleaned_sentence]):
+                    sentiment_result = detailed_analysis([cleaned_sentence])
+                else:
+                    sc = classifiers.SpanishClassifier(model_name="sentiment_analysis")
+                    result_classifier = sc.predict(cleaned_sentence)
+                    sentiment_result = {
+                        'pos': result_classifier.get('positive', 0.0),
+                        'neg': result_classifier.get('negative', 0.0),
+                        'neu': result_classifier.get('neutral', 0.0)
+                    }
+                results.append({'text': cleaned_sentence, 'sentiment': sentiment_result})
 
-        # Process each text
-        individual_results = {}  # Changed from list to dictionary
-        for idx, text in enumerate(texts):
-            final_comment = text.split('.')
-            if determine_language(final_comment):
-                result = detailed_analysis(final_comment)
-            else:
-                sc = classifiers.SpanishClassifier(
-                    model_name="sentiment_analysis"
-                )
-                result_string = ' '.join(final_comment)
-                result_classifier = sc.predict(result_string)
-                result = {
-                    'pos': result_classifier.get('positive', 0.0),
-                    'neg': result_classifier.get('negative', 0.0),
-                    'neu': result_classifier.get('neutral', 0.0)
-                }
-
-            # Add to totals
-            total_sentiment['pos'] += result['pos']
-            total_sentiment['neg'] += result['neg']
-            total_sentiment['neu'] += result['neu']
-
-            # Store individual results with index as key
-            individual_results[str(idx)] = {
-                'text': text,
-                'sentiment': result
+        store_text_analysis(
+            request,
+            data={
+                'sentiment': calculate_average_sentiment(results),
+                'text': sentences,
+                'reviewsRatio': {i: res for i, res in enumerate(results)}, # Store individual sentence results
+                'totalReviews': len(results),
+                'showReviewsRatio': True
             }
+        )
+        return render(
+            request,
+            'realworld/results.html',
+            {
+                'sentiment': calculate_average_sentiment(results),
+                'text': sentences,
+                'reviewsRatio': {i: res for i, res in enumerate(results)},
+                'totalReviews': len(results),
+                'showReviewsRatio': False
+            }
+        )
+    else:
+        note = "Enter the Text to be analysed!"
+        return render(request, 'realworld/textanalysis.html', {'note': note})
 
-        # Calculate average sentiment
-        num_texts = len(texts) or 1
-        avg_sentiment = {
-            'pos': total_sentiment['pos'] / num_texts,
-            'neg': total_sentiment['neg'] / num_texts,
-            'neu': total_sentiment['neu'] / num_texts
-        }
+def calculate_average_sentiment(results):
+    if not results:
+        return {'pos': 0.0, 'neg': 0.0, 'neu': 0.0}
+    total_pos = sum(res['sentiment']['pos'] for res in results)
+    total_neg = sum(res['sentiment']['neg'] for res in results)
+    total_neu = sum(res['sentiment']['neu'] for res in results)
+    num_results = len(results)
+    return {
+        'pos': total_pos / num_results,
+        'neg': total_neg / num_results,
+        'neu': total_neu / num_results
+    }
 
-        return render(request, 'realworld/results.html', {
-            'sentiment': avg_sentiment,
-            'text': texts,
-            'reviewsRatio': individual_results,  # Now a dictionary
-            'totalReviews': len(texts),
-            'showReviewsRatio': True
-        })
-    return render(request, 'realworld/batch_analysis.html')
+def youtube_transcript_analysis(request):
+    if request.method == 'POST':
+        video_link = request.POST.get("vidlink", "")
+        full_text_data = get_transcript(video_link=video_link)
 
+        if not full_text_data:
+            return 404 # link didn't work
+        
+        # sentences = full_text_data.split('.')
+        sentences = nltk.PunktSentenceTokenizer().tokenize(full_text_data)
+        results = []
+
+        for sentence in sentences:
+            cleaned_sentence = sentence.strip()
+            if cleaned_sentence:
+                if determine_language([cleaned_sentence]):
+                    sentiment_result = detailed_analysis([cleaned_sentence])
+                else:
+                    sc = classifiers.SpanishClassifier(model_name="sentiment_analysis")
+                    result_classifier = sc.predict(cleaned_sentence)
+                    sentiment_result = {
+                        'pos': result_classifier.get('positive', 0.0),
+                        'neg': result_classifier.get('negative', 0.0),
+                        'neu': result_classifier.get('neutral', 0.0)
+                    }
+                results.append({'text': cleaned_sentence, 'sentiment': sentiment_result})
+
+        store_youtube_data(
+            request,
+            data={
+                'sentiment': calculate_average_sentiment(results),
+                'text': sentences,
+                'reviewsRatio': {i: res for i, res in enumerate(results)}, # Store individual sentence results
+                'totalReviews': len(results),
+                'showReviewsRatio': True
+            }
+        )
+        return render(
+            request,
+            'realworld/results.html',
+            {
+                'sentiment': calculate_average_sentiment(results),
+                'text': sentences,
+                'reviewsRatio': {i: res for i, res in enumerate(results)},
+                'totalReviews': len(results),
+                'showReviewsRatio': True
+            }
+        )
+    else:
+        note = "Enter link to yt video"
+        return render(request, 'realworld/textanalysis.html', {'note': note})
+    
+def youtube_comments_analysis(request):
+    if request.method == 'POST':
+        video_link = request.POST.get("vidlink", "")
+        full_text_data = get_top_liked_comments(video_link=video_link)
+
+        if not full_text_data:
+            return 404 # link didn't work
+        
+        # sentences = full_text_data.split('.')
+        sentences = nltk.sent_tokenize(full_text_data)
+        results = []
+
+        for sentence in sentences:
+            cleaned_sentence = sentence.strip()
+            if cleaned_sentence:
+                if determine_language([cleaned_sentence]):
+                    sentiment_result = detailed_analysis([cleaned_sentence])
+                else:
+                    sc = classifiers.SpanishClassifier(model_name="sentiment_analysis")
+                    result_classifier = sc.predict(cleaned_sentence)
+                    sentiment_result = {
+                        'pos': result_classifier.get('positive', 0.0),
+                        'neg': result_classifier.get('negative', 0.0),
+                        'neu': result_classifier.get('neutral', 0.0)
+                    }
+                if sentiment_result:
+                    results.append({'text': cleaned_sentence, 'sentiment': sentiment_result})
+
+        store_youtube_data(
+            request,
+            data={
+                'sentiment': calculate_average_sentiment(results),
+                'text': sentences,
+                'reviewsRatio': {i: res for i, res in enumerate(results)}, # Store individual sentence results
+                'totalReviews': len(results),
+                'showReviewsRatio': True
+            }
+        )
+        return render(
+            request,
+            'realworld/results.html',
+            {
+                'sentiment': calculate_average_sentiment(results),
+                'text': sentences,
+                'reviewsRatio': {i: res for i, res in enumerate(results)},
+                'totalReviews': len(results),
+                'showReviewsRatio': True
+            }
+        )
+    else:
+        note = "Enter link to yt video"
+        return render(request, 'realworld/textanalysis.html', {'note': note})
 
 def determine_language(texts):
     try:
@@ -1205,6 +1373,41 @@ def reddit_history_detail(request, timestamp):
 
     if analysis_data is None:
         return HttpResponse("Analysis data not found for Reddit", status=404)
+
+    return render(
+        request,
+        'realworld/results.html',
+        {
+            'sentiment': analysis_data['sentiment'],
+            'text': analysis_data['text'],
+            'reviewsRatio': analysis_data.get('reviewsRatio', {}),
+            'totalReviews': analysis_data.get('totalReviews', 1),
+            'showReviewsRatio': analysis_data.get('showReviewsRatio', False)
+        }
+    )
+
+def youtube_history_detail(request, timestamp):
+    user = get_user(request)
+    username = user.username
+
+    # Define the directory path
+    directory_path = os.path.join(
+        "sentimental_analysis",
+        "media",
+        "user_data"
+    )
+    file_path = os.path.join(directory_path, f"{username}.json")
+
+    history_data = {}
+    if os.path.exists(file_path):
+        with open(file_path, 'r') as json_file:
+            history_data = json.load(json_file)
+
+    # Find the specific analysis data by timestamp
+    analysis_data = history_data.get('Youtube', {}).get(timestamp)
+
+    if analysis_data is None:
+        return HttpResponse("Analysis data not found for Youtube", status=404)
 
     return render(
         request,

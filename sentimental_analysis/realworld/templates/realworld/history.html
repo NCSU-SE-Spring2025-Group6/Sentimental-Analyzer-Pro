@@ -1,408 +1,263 @@
+
 <!DOCTYPE html>
 <html>
-   {% load static %}
-   <head lang="en">
-      <meta charset="UTF-8">
-      <title>S.A.P</title>
-      <meta name="keywords" content="">
-      <meta name="description" content="">
-      <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no"/>
-      <link rel="shortcut icon" href="{% static "images/favicon-black.ico" %}" title="Favicon"/>
-      <link rel="stylesheet" href="{% static "css/bg.css" %}">
-      <link rel="stylesheet" href="{% static "css/style.css" %}">
-      <link rel="stylesheet" href="{% static "css/dynamic.css" %}">
-      <link rel="stylesheet" href="{% static "css/nemina.css" %}">
-      <link rel="stylesheet" href="{% static "css/header.css" %}">
-      <link rel="stylesheet" href="{% static "css/font-awesome.min.css" %}">
-      <link href="{% static "css/animate.css" %}" rel="stylesheet" type="text/css">
-      <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,300,600,700,800' rel='stylesheet' type='text/css'>
-      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css">
-      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" integrity="sha512-/RSva8ME+iHQsLO+St7Xg/SJ9ufViOc6pkKAAMfvhN/EFZSC0HVivYOY1DOtTiLEooL6G6Ae2H+pfN43f8r5Gg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+{% load static %}
+<head lang="en">
+  <meta charset="UTF-8">
+  <title>S.A.P</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <link rel="stylesheet" href="{% static 'css/bg.css' %}">
+  <link rel="stylesheet" href="{% static 'css/style.css' %}">
+  <link rel="stylesheet" href="{% static 'css/dynamic.css' %}">
+  <link rel="stylesheet" href="{% static 'css/nemina.css' %}">
+  <link rel="stylesheet" href="{% static 'css/header.css' %}">
+  <link rel="stylesheet" href="{% static 'css/font-awesome.min.css' %}">
+  <link href="{% static 'css/animate.css' %}" rel="stylesheet" type="text/css">
+  <style>
+    .section-heading-history {
+      background: #fbe3d8;
+      border-left: 5px solid #e0674e;
+      padding: 20px;
+      border-radius: 10px;
+    }
+    .section-title {
+      color: #e0674e;
+      font-size: 1.8rem;
+      margin-left: 40%;
+    }
+    .history-list {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+    .history-item {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: #fff;
+      border: 1px solid #eee;
+      padding: 14px 20px;
+      border-radius: 6px;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+      margin-bottom: 12px;
+      max-width: 850px;
+      margin-left: auto;
+      margin-right: auto;
+      gap: 20px;
+    }
+    .history-card-content {
+      display: flex;
+      flex-direction: column;
+      flex: 1;
+    }
+    .history-date {
+      font-weight: bold;
+      font-size: 0.95rem;
+      color: #444;
+    }
+    .history-text {
+      color: #666;
+      font-size: 0.9rem;
+      margin-top: 6px;
+      font-style: italic;
+    }
+    .badge {
+      display: inline-block;
+      padding: 4px 12px 6px 8px;
+      font-size: 0.85rem;
+      border-radius: 20px;
+      font-weight: bold;
+      margin-top: 6px;
+      width: fit-content;
+    }
+    .history-type {
+      background-color: #c1e9ff;
+      color: #444;
+    }
+    .positive {
+      background-color: #c2f0c2;
+      color: #267326;
+    }
+    .neutral {
+      background-color: #ffeaa7;
+      color: #b37400;
+    }
+    .negative {
+      background-color: #ffcccc;
+      color: #cc0000;
+    }
+    .btn {
+      color: white;
+      padding: 6px 12px;
+      text-decoration: none;
+      border-radius: 4px;
+      font-weight: 600;
+      white-space: nowrap;
+      border: none;
+      outline: none;
+      font-size: 16px;
+    }
+    .btn:hover {
+      transform: scale(1.07);
+    }
+    .view-btn {
+      background-color: #9b9b9b;
+    }
+    .view-btn:hover {
+      background: #5e5e5e;
+    }
+    .delete-btn {
+      background-color: #ff4d4d;
+    }
+    .delete-btn:hover {
+      background-color: #cc0000;
+    }
+    #about {
+      margin-bottom: 10px;
+    }
+    .main-heading {
+      color: #e0674e;
+      font-size: 2rem;
+      margin-bottom: 10px;
+      text-align: center;
+      font: normal 42px Verdana, Arial, sans-serif;
+    }
+    @media (max-width: 768px) {
+      .section-heading-history {
+        padding: 12px;
+      }
+      .section-title {
+        font-size: 1.4rem;
+      }
+      .history-item {
+        flex-direction: column;
+        align-items: stretch;
+      }
+      .view-btn {
+        align-self: flex-start;
+        margin-top: 10px;
+      }
+    }
+  </style>
+</head>
+<body>
+<div id="wrapper">
+  {% include 'realworld/header.html' %}
+  <main id="content" class="bgcol">
+    <section id="about" class="scrollto clearfix" style="background: inherit !important">
+      <div class="row clearfix">
+        <div class="col-1">
+          <h2 class="main-heading">Sentiment History</h2>
+        </div>
+      </div>
+    </section>
 
-   </head>
-   <body>
-      <style>
-         .form-label {
-         display: block;
-         font-weight: bold;
-         margin-bottom: 10px;
-         text-align: left;
-         }
-         .hidden {
-         display: none;
-         }
-         .drop-container {
-         position: relative;
-         display: flex;
-         gap: 10px;
-         flex-direction: column;
-         justify-content: center;
-         align-items: center;
-         height: 160px;
-         padding: 20px;
-         border-radius: 10px;
-         border: 2px dashed #555;
-         color: #444;
-         cursor: pointer;
-         transition: background .2s ease-in-out, border .2s ease-in-out;
-         }
-         .drop-container:hover {
-         background: #eee;
-         border-color: #111;
-         }
-         .drop-container:hover .drop-title {
-         color: #222;
-         }
-         .drop-title {
-         color: #444;
-         font-size: 20px;
-         font-weight: bold;
-         text-align: center;
-         transition: color .2s ease-in-out;
-         }
-         .mt-4 {
-            margin-top: 2rem;
-         }
-         .line-edit {
-            width: 100%;
-            padding: 8px;
-            margin-bottom: 1rem;
-            border: 1px solid #ddd;
-            border-radius: 4px;
-         }
-         textarea.line-edit {
-            resize: vertical;
-            min-height: 100px;
-         }
-         .button {
-            margin-top: 10px;
-         }
-      </style>
-      <div id="preloader">
-         <div id="status" class="la-ball-triangle-path">
-            <div></div>
-            <div></div>
-            <div></div>
-         </div>
-      </div>
-      <div class="page-border" data-wow-duration="0.7s" data-wow-delay="0.2s">
-         <div class="top-border wow fadeInDown animated" style="visibility: visible; animation-name: fadeInDown;"></div>
-         <div class="right-border wow fadeInRight animated" style="visibility: visible; animation-name: fadeInRight;"></div>
-         <div class="bottom-border wow fadeInUp animated" style="visibility: visible; animation-name: fadeInUp;"></div>
-         <div class="left-border wow fadeInLeft animated" style="visibility: visible; animation-name: fadeInLeft;"></div>
-      </div>
-      <div id="wrapper">
-         <header id="banner" class="scrollto clearfix" data-enllax-ratio=".5">
-            {% include 'realworld/header.html' %}
-         </header>
-         <main id="content" class="bgcol">
-            <section id="about" class="introduction scrollto">
-               <div class="row clearfix" >
-                  <div class="col-1-2">
-                     <h2 class="section-title">History</h2>
+    <section id="{{ section|slugify }}" class="scrollto clearfix">
+      <div class="row clearfix">
+        <div class="col-1">
+          <div class="section-heading-history">
+            {% if sorted_history %}
+              <ol class="history-list">
+                {% for entry in sorted_history %}
+                <li class="history-item">
+                  <div class="history-card-content">
+                    <span class="history-date">
+                      {{ entry.data.formatted_time|default:entry.timestamp }}
+                    </span>
+
+                    <div>
+                      <span class="badge history-type">
+                        {% if entry.section == 'Text_Analysis' %}
+                          📝 Text Analysis
+                        {% elif entry.section == 'Doc_Analysis' %}
+                          📄 Document Analysis
+                        {% elif entry.section == 'Live_Speech' %}
+                          🎙️ Live Speech
+                        {% elif entry.section == 'Product_Analysis' %}
+                          📦 Product Review
+                        {% elif entry.section == 'Image_Analysis' %}
+                          🖼️ Image Analysis
+                        {% elif entry.section == 'News_Analysis' %}
+                          📰 News Topic
+                        {% elif entry.section == 'Audio_Analysis' %}
+                          🎧 Audio Analysis
+                        {% elif entry.section == 'Facebook' %}
+                          📘 Facebook Comment
+                        {% elif entry.section == 'Twitter' %}
+                          🐦 Twitter Post
+                        {% elif entry.section == 'Reddit' %}
+                          🤖 Reddit Thread
+                        {% elif entry.section == 'Youtube' %}
+                          ▶️ Youtube Video
+                        {% else %}
+                          🔍 Analysis
+                        {% endif %}
+                      </span>
+
+                      {% with sentiment=entry.data.sentiment %}
+                      {% if sentiment.pos > sentiment.neu and sentiment.pos > sentiment.neg %}
+                        <span class="badge positive">😊 Positive</span>
+                      {% elif sentiment.neg > sentiment.pos and sentiment.neg > sentiment.neu %}
+                        <span class="badge negative">😞 Negative</span>
+                      {% else %}
+                        <span class="badge neutral">😐 Neutral</span>
+                      {% endif %}
+                      {% endwith %}
                     </div>
-                  </div>
-                </div>
-            </body>
-            <!-- <div class="sep">   </div> -->
-            <section id="gallery" class="scrollto clearfix">
-               <div class="row no-padding-bottom clearfix">
-                  <div class="col-1">
-                     <div class="section-heading">
-                        <h2 class="section-title">Product Analysis</h2>
-                        <ol class="history-list">
-                            {% for timestamp, data in history_data.Product_Analysis.items %}
-                                <li class="history-item">
-                                    <!-- <a href="#">{{ timestamp }}: {{ data }}</a> -->
-                                    <a href="{% url 'product_history_detail' timestamp=timestamp %}">
-                                        {{ timestamp }}: {{ data }}
-                                    </a>
-                                </li>
-                            {% endfor %}
-                        </ol>
-                     </div>
-                  </div>
-               </div>
-            </section>
-            <section id="services" class="scrollto clearfix">
-               <div class="row no-padding-bottom clearfix">
-                  <div class="col-1" style="padding-left: 0px;">
-                     <div class="section-heading">
-                        <h2 class="section-title">Image Analysis</h2>
-                        <ol class="history-list">
-                            {% for timestamp, data in history_data.Image_Analysis.items %}
-                                <li class="history-item">
-                                    <!-- <a href="#">{{ timestamp }}: {{ data }}</a> -->
-                                    <a href="{% url 'image_history_detail' timestamp=timestamp %}">
-                                        {{ timestamp }}: {{ data }}
-                                    </a>
-                                </li>
-                            {% endfor %}
-                        </ol>
-                     </div>
-                  </div>
-               </div>
-            </section>
-            <section id="news" class="scrollto clearfix">
-               <div class="row no-padding-bottom clearfix">
-                  <div class="col-1">
-                     <div class="section-heading">
-                        <h2 class="section-title">News Analysis</h2>
-                        <ol class="history-list">
-                            {% for timestamp, data in history_data.News_Analysis.items %}
-                                <li class="history-item">
-                                    <!-- <a href="#">{{ timestamp }}: {{ data }}</a> -->
-                                    <a href="{% url 'news_history_detail' timestamp=timestamp %}">
-                                        {{ timestamp }}: {{ data }}
-                                    </a>
-                                </li>
-                            {% endfor %}
-                        </ol>
-                     </div>
-                  </div>
-               </div>
-            </section>
-            <section id="document" class="scrollto clearfix">
-               <div class="row no-padding-bottom clearfix">
-                  <div class="col-1" style="padding-left: 0px;">
-                     <div class="section-heading">
-                        <h2 class="section-title">Document Analysis</h2>
-                        <ol class="history-list">
-                            {% for timestamp, data in history_data.Doc_Analysis.items %}
-                                <li class="history-item">
-                                    <!-- <a href="#">{{ timestamp }}: {{ data }}</a> -->
-                                    <a href="{% url 'document_history_detail' timestamp=timestamp %}">
-                                        {{ timestamp }}: {{ data }}
-                                    </a>
-                                </li>
-                            {% endfor %}
-                        </ol>
-                     </div>
-                  </div>
-               </div>
-            </section>
-            <section id="text" class="scrollto clearfix">
-               <div class="row no-padding-bottom clearfix">
-                   <div class="col-1" style="padding-left: 0px;">
-                       <div class="section-heading">
-                           <h2 class="section-title">Text Analysis</h2>
-                           <ol class="history-list">
-                            {% for timestamp, data in history_data.Text_Analysis.items %}
-                                <li class="history-item">
-                                    <a href="{% url 'text_history_detail' timestamp=timestamp %}">
-                                        {{ timestamp }}: {{ data }}
-                                    </a>
-                                </li>
-                            {% endfor %}
-                        </ol>
-                       </div>
-                   </div>
-               </div>
-           </section>
-            <section id="audio" class="scrollto clearfix">
-               <div class="row no-padding-bottom clearfix">
-                  <div class="col-1" style="padding-left: 0px;">
-                     <div class="section-heading">
-                        <h2 class="section-title">Audio Analysis</h2>
-                        <ol class="history-list">
-                            {% for timestamp, data in history_data.Audio_Analysis.items %}
-                                <li class="history-item">
-                                    <!-- <a href="#">{{ timestamp }}: {{ data }}</a> -->
-                                    <a href="{% url 'audio_history_detail' timestamp=timestamp %}">
-                                        {{ timestamp }}: {{ data }}
-                                    </a>
-                                </li>
-                            {% endfor %}
-                        </ol>
-                     </div>
-                  </div>
-               </div>
-            </section>
-            <section id="live-speech" class="scrollto clearfix">
-               <div class="row no-padding-bottom clearfix">
-                  <div class="col-1" style="padding-left: 0px;">
-                     <div class="section-heading">
-                        <h2 class="section-title">Live Speech Analysis</h2>
-                        <ol class="history-list">
-                            {% for timestamp, data in history_data.Live_Speech.items %}
-                                <li class="history-item">
-                                    <!-- <a href="#">{{ timestamp }}: {{ data }}</a> -->
-                                    <a href="{% url 'live_history_detail' timestamp=timestamp %}">
-                                        {{ timestamp }}: {{ data }}
-                                    </a>
-                                </li>
-                            {% endfor %}
-                        </ol>
-                     </div>
-                  </div>
-               </div>
-               
-            </section>
-            <section id="facebook" class="scrollto clearfix">
-               <div class="row no-padding-bottom clearfix">
-                  <div class="col-1">
-                     <div class="section-heading">
-                        <h2 class="section-title">Facebook Analysis</h2>
-                        <ol class="history-list">
-                            {% for timestamp, data in history_data.Facebook.items %}
-                                <li class="history-item">
-                                    <!-- <a href="#">{{ timestamp }}: {{ data }}</a> -->
-                                    <a href="{% url 'facebook_history_detail' timestamp=timestamp %}">
-                                        {{ timestamp }}: {{ data }}
-                                    </a>
-                                </li>
-                            {% endfor %}
-                        </ol>
-                     </div>
-                  </div>
-               </div>
-            </section>
-            <section id="twitter" class="scrollto clearfix">
-               <div class="row no-padding-bottom clearfix">
-                  <div class="col-1">
-                     <div class="section-heading">
-                        <h2 class="section-title">Twitter Analysis</h2>
-                        <ol class="history-list">
-                            {% for timestamp, data in history_data.Twitter.items %}
-                                <li class="history-item">
-                                    <!-- <a href="#">{{ timestamp }}: {{ data }}</a> -->
-                                    <a href="{% url 'twitter_history_detail' timestamp=timestamp %}">
-                                        {{ timestamp }}: {{ data }}
-                                    </a>
-                                </li>
-                            {% endfor %}
-                        </ol>
-                     </div>
-                  </div>
-               </div>
-            </section>
-            <section id="reddit" class="scrollto clearfix">
-               <div class="row no-padding-bottom clearfix">
-                  <div class="col-1">
-                     <div class="section-heading">
-                        <h2 class="section-title">Reddit Analysis</h2>
-                        <ol class="history-list">
-                            {% for timestamp, data in history_data.Reddit.items %}
-                                <li class="history-item">
-                                    <!-- <a href="#">{{ timestamp }}: {{ data }}</a> -->
-                                    <a href="{% url 'reddit_history_detail' timestamp=timestamp %}">
-                                        {{ timestamp }}: {{ data }}
-                                    </a>
-                                </li>
-                            {% endfor %}
-                        </ol>
-                     </div>
-                  </div>
-               </div>
-            </section>
-            
-         </html>
-         {% include 'realworld/footer.html' %}
-          
-        
-      </div>
-      <script src="{% static "js/jquery.1.8.3.min.js" %}"></script>
-      <script src="{% static "js/wow.min.js" %}"></script>
-      <script src="{% static "js/featherlight.min.js" %}"></script>
-      <script src="{% static "js/featherlight.gallery.min.js" %}"></script>
-      <script src="{% static "js/jquery.enllax.min.js" %}"></script>
-      <script src="{% static "js/jquery.scrollUp.min.js" %}"></script>
-      <script src="{% static "js/jquery.easing.min.js" %}"></script>
-      <script src="{% static "js/jquery.stickyNavbar.min.js" %}"></script>
-      <script src="{% static "js/jquery.waypoints.min.js" %}"></script>
-      <script src="{% static "js/images-loaded.min.js" %}"></script>
-      <script src="{% static "js/lightbox.min.js" %}"></script>
-      <script src="{% static "js/site.js" %}"></script>
-      <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
 
+                    {% if entry.data.text %}
+                      <span class="history-text">
+                        {{ entry.data.text.0|default:entry.data.text|truncatechars:80 }}
+                      </span>
+                    {% else %}
+                      <span class="history-text">No content preview available</span>
+                    {% endif %}
+                  </div>
 
-      <script>
-         const dropContainer = document.getElementById("dropcontainer")
-         const fileInput = document.getElementById("file")
-         
-         dropContainer.addEventListener("dragover", (e) => {
-             // prevent default to allow drop
-             e.preventDefault()
-         }, false)
-         
-         dropContainer.addEventListener("dragenter", () => {
-             dropContainer.classList.add("drag-active")
-         })
-         
-         dropContainer.addEventListener("dragleave", () => {
-             dropContainer.classList.remove("drag-active")
-         })
-         
-         dropContainer.addEventListener("drop", (e) => {
-             e.preventDefault()
-             dropContainer.classList.remove("drag-active")
-             fileInput.files = e.dataTransfer.files
-         })
-         
-         let mediaRecorder;
-         const audioChunks = [];
-         var label = document.getElementById('labelForRecording')
-         document.getElementById('recordButton').addEventListener('click', async () => {
-             if (recordButton.textContent === 'Start Recording') {
-                 try {
-                     const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
-                     mediaRecorder = new MediaRecorder(stream);
-         
-                     mediaRecorder.ondataavailable = (event) => {
-                         if (event.data.size > 0) {
-                             audioChunks.push(event.data);
-                         }
-                     };
-         
-                     mediaRecorder.onstop = () => {
-                         const audioBlob = new Blob(audioChunks, { type: 'audio/wav' });
-                         sendDataToDjango(audioBlob);
-                     };
-         
-                     mediaRecorder.start();
-                     label.textContent = "Recording has started."
-                     recordButton.textContent = 'Stop Recording';
-                 } catch (error) {
-                     console.error('Error accessing microphone:', error);
-                 }
-             } else {
-                 audioChunks.length = 0;
-                 label.textContent = "Recording is completed. Kindly, press analyze to do sentimental analysis"
-                 mediaRecorder.stop();
-                 recordButton.textContent = 'Start Recording';
-             }
-         });
-         let count = 1;
-         function sendDataToDjango(audioBlob) {
-             const formData = new FormData();
-             const filename = `${count}.wav`;
-             formData.append('liveaudioFile', audioBlob, filename);
-         
-             fetch('/recordAudio/', {
-                 method: 'POST',
-                 body: formData,
-             })
-             .then(response => {
-                 if (response.status === 200) {
-                     console.log('Audio sent to Django successfully.');
-                 } else {
-                     console.error('Failed to send audio to Django.');
-                     // Handle error
-                 }
-             })
-             .catch(error => {
-                 console.error('Error sending audio to Django:', error);
-             });
-         
-             count++;
-         }
-         document.querySelectorAll('form').forEach(form => {
-            form.addEventListener('submit', function() {
-               const submitButton = this.querySelector('button[type="submit"]');
-               submitButton.disabled = true;
-               submitButton.textContent = 'Processing...';
-            });
-         });
-      </script>
-   </body>
+                  {% if entry.section == 'Text_Analysis' %}
+                    <a class="btn view-btn" href="{% url 'text_history_detail' timestamp=entry.timestamp %}">View</a>
+                  {% elif entry.section == 'Doc_Analysis' %}
+                    <a class="btn view-btn" href="{% url 'document_history_detail' timestamp=entry.timestamp %}">View</a>
+                  {% elif entry.section == 'Live_Speech' %}
+                    <a class="btn view-btn" href="{% url 'live_history_detail' timestamp=entry.timestamp %}">View</a>
+                  {% elif entry.section == 'Product_Analysis' %}
+                    <a class="btn view-btn" href="{% url 'product_history_detail' timestamp=entry.timestamp %}">View</a>
+                  {% elif entry.section == 'Image_Analysis' %}
+                    <a class="btn view-btn" href="{% url 'image_history_detail' timestamp=entry.timestamp %}">View</a>
+                  {% elif entry.section == 'News_Analysis' %}
+                    <a class="btn view-btn" href="{% url 'news_history_detail' timestamp=entry.timestamp %}">View</a>
+                  {% elif entry.section == 'Audio_Analysis' %}
+                    <a class="btn view-btn" href="{% url 'audio_history_detail' timestamp=entry.timestamp %}">View</a>
+                  {% elif entry.section == 'Facebook' %}
+                    <a class="btn view-btn" href="{% url 'facebook_history_detail' timestamp=entry.timestamp %}">View</a>
+                  {% elif entry.section == 'Twitter' %}
+                    <a class="btn view-btn" href="{% url 'twitter_history_detail' timestamp=entry.timestamp %}">View</a>
+                  {% elif entry.section == 'Reddit' %}
+                    <a class="btn view-btn" href="{% url 'reddit_history_detail' timestamp=entry.timestamp %}">View</a>
+                  {% elif entry.section == 'Youtube' %}
+                    <a class="btn view-btn" href="{% url 'youtube_history_detail' timestamp=entry.timestamp %}">View</a>
+                  {% endif %}
+
+                  <!-- Delete Button -->
+                  <form method="POST" action="{% url 'delete_history_entry' %}">
+                    {% csrf_token %}
+                    <input type="hidden" name="timestamp" value="{{ entry.timestamp }}">
+                    <input type="hidden" name="section" value="{{ entry.section }}">
+                    <button type="submit" class="btn delete-btn">Delete</button>
+                  </form>
+                </li>
+                {% endfor %}
+              </ol>
+            {% else %}
+              <p class="no-history-message" style="text-align: center; color: #666; font-size: 1.2rem; margin-top: 20px;">
+                No history available. Start analyzing to see your results here!
+              </p>
+            {% endif %}
+          </div>
+        </div>
+      </section>
+  </main>
+  {% include 'realworld/footer.html' %}
+</div>
+</body>
 </html>

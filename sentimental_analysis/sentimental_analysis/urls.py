@@ -69,6 +69,16 @@ urlpatterns = [
         name='reddit analysis'
     ),
     re_path(
+        r'^youtubetranscriptanalysis',
+        realworld.views.youtube_transcript_analysis,
+        name='youtube transcript analysis'
+    ),
+    re_path(
+        r'^youtubecommentsanalysis',
+        realworld.views.youtube_comments_analysis,
+        name='youtube comments analysis'
+    ),
+    re_path(
         r'^recordAudio',
         realworld.views.recordaudio,
         name='recordAudio'
@@ -92,6 +102,11 @@ urlpatterns = [
         'history/',
         realworld.views.history_view,
         name='history'
+    ),
+    path(
+        'delete-history-entry/', 
+        realworld.views.delete_history_entry,
+        name='delete_history_entry'
     ),
     path(
         'settings/',
@@ -146,6 +161,10 @@ urlpatterns = [
         'history/reddit/<str:timestamp>/',
         realworld.views.reddit_history_detail,
         name='reddit_history_detail'),
+    path(
+        'history/youtube/<str:timestamp>/',
+        realworld.views.youtube_history_detail,
+        name='youtube_history_detail'),
     path(
         'history/twitter/<str:timestamp>/',
         realworld.views.twitter_history_detail,

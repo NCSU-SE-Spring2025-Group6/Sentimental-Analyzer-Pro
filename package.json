@@ -1,0 +1,28 @@
+{
+  "name": "sentimental-analyzer-pro",
+  "version": "1.0.0",
+  "description": "<!-- links need to be changed --> [![DOI](https://zenodo.org/badge/869224666.svg)](https://doi.org/10.5281/zenodo.14226600) [![GitHub Release](https://img.shields.io/github/v/release/NCSU-SE-Spring2025-Group6/Sentimental-Analyzer-Pro)](https://github.com/NCSU-SE-Spring2025-Group6/Sentimental-Analyzer-Pro/releases) [![Build](https://github.com/NCSU-SE-Spring2025-Group6/Sentimental-Analyzer-Pro/actions/workflows/main.yml/badge.svg)](https://github.com/NCSU-SE-Spring2025-Group6/Sentimental-Analyzer-Pro/actions/workflows/main.yml) [![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](https://opensource.org/licenses/MIT) [![Python](https://img.shields.io/badge/python-v3.11+-brightgreen.svg)](https://www.python.org/) [![GitHub contributors](https://img.shields.io/github/contributors/NCSU-SE-Spring2025-Group6/Sentimental-Analyzer-Pro)](https://github.com/NCSU-SE-Spring2025-Group6/Sentimental-Analyzer-Pro/graphs/contributors) [![GitHub Issues](https://img.shields.io/github/issues/NCSU-SE-Spring2025-Group6/Sentimental-Analyzer-Pro)](https://github.com/NCSU-SE-Spring2025-Group6/Sentimental-Analyzer-Pro/issues) [![GitHub Closed Issues](https://img.shields.io/github/issues-closed/NCSU-SE-Spring2025-Group6/Sentimental-Analyzer-Pro)](https://github.com/NCSU-SE-Spring2025-Group6/Sentimental-Analyzer-Pro/issues?q=is%3Aissue+is%3Aclosed) [![GitHub Pull Requests](https://img.shields.io/github/issues-pr/NCSU-SE-Spring2025-Group6/Sentimental-Analyzer-Pro)](https://github.com/NCSU-SE-Spring2025-Group6/Sentimental-Analyzer-Pro/pulls) [![github workflow](https://github.com/NCSU-SE-Spring2025-Group6/Sentimental-Analyzer-Pro/actions/workflows/code_coverage.yml/badge.svg)](https://github.com/NCSU-SE-Spring2025-Group6/Sentimental-Analyzer-Pro/actions/workflows/code_coverage.yml) [![Python Style Checker](https://github.com/NCSU-SE-Spring2025-Group6/Sentimental-Analyzer-Pro/actions/workflows/style_checker.yml/badge.svg)](https://github.com/NCSU-SE-Spring2025-Group6/Sentimental-Analyzer-Pro/actions/workflows/style_checker.yml) [![Code Formatting](https://github.com/NCSU-SE-Spring2025-Group6/Sentimental-Analyzer-Pro/actions/workflows/code-format.yml/badge.svg)](https://github.com/NCSU-SE-Spring2025-Group6/Sentimental-Analyzer-Pro/actions/workflows/code-format.yml) [![Syntax Check](https://github.com/NCSU-SE-Spring2025-Group6/Sentimental-Analyzer-Pro/actions/workflows/syntax-checker.yml/badge.svg)](https://github.com/NCSU-SE-Spring2025-Group6/Sentimental-Analyzer-Pro/actions/workflows/syntax-checker.yml) [![codecov](https://codecov.io/gh/NCSU-SE-Spring2025-Group6/Sentimental-Analyzer-Pro/graph/badge.svg?token=T489V1DSQO)](https://codecov.io/gh/NCSU-SE-Spring2025-Group6/Sentimental-Analyzer-Pro) [![PEP8](https://img.shields.io/badge/code%20style-pep8-orange.svg)](https://www.python.org/dev/peps/pep-0008/) [![autopep8](https://img.shields.io/badge/code_formatter-autopep8-blue)](https://pypi.org/project/autopep8/) [![Static Badge](https://img.shields.io/badge/code_analysis-pylint-yellow?labelColor=grey)](https://pypi.org/project/pylint/)",
+  "main": "index.js",
+  "directories": {
+    "test": "test"
+  },
+  "scripts": {
+    "test": "jest"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/CSC-510-G7/Sentimental-Analyzer-Pro.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/CSC-510-G7/Sentimental-Analyzer-Pro/issues"
+  },
+  "homepage": "https://github.com/CSC-510-G7/Sentimental-Analyzer-Pro#readme",
+  "devDependencies": {
+    "cypress": "^14.3.0",
+    "jest": "^29.7.0",
+    "jsdom": "^26.1.0"
+  }
+}

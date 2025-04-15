@@ -94,20 +94,22 @@
       <div id="wrapper">
          <header id="banner" class="scrollto clearfix" data-enllax-ratio=".5">
             {% include 'realworld/header.html' %}
-            <div id="banner-content" class="row clearfix">
-               <div class="section-heading">
-                  <div class="col-38">
-                     <h1>Sentiment Analyzer Pro</h1>
-                     <div class="separator"></div>
-                     <h2 id="head">
-                        <br>Have you ever wondered what sentiments are behind the reviews on Amazon or maybe what someone says or what someone writes. Here we have created an elegant solution to such queries by having an analysis of these sentiments from the given input. <br><br>
-                     </h2>
-                     <div class="separator"></div>
-                  </div>
-               </div>
-            </div>
-            <div class="sep"></div>
-         </header>
+          
+            <section id="hero-banner">
+              <div class="hero-overlay">
+                <div class="hero-textbox">
+                  <h1 class="hero-title">Sentiment Analyzer Pro</h1>  
+                  <p class="hero-subtext">
+                
+                     <strong>What if you could read between the lines?</strong><br>
+                     From Amazon reviews to everyday conversations — every word carries emotion.
+                     <strong>Sentiment Analyzer Pro</strong> helps you decode the mood behind the message — fast, smart, and beautifully simple.
+                  </p>
+                </div>
+              </div>
+            </section>
+          </header>
+          
          
          <main id="content" class="bgcol">
             <section id="about" class="introduction scrollto">
@@ -212,6 +214,15 @@
                            <p>Upload an Image and Sentiment Analyzer Pro will analyze the image and report back the sentiments felt by the person like  happy, sad, etc.</p>
                         </div>
                      </div>
+                     <div class="col-2 icon-block icon-top wow fadeInUp" data-wow-delay="0.5s">
+                        <div class="icon">
+                           <i class="fas fa-brands fa-youtube fa-2x"></i>
+                        </div>
+                        <div class="icon-block-description">
+                           <h4>Youtube Analysis</h4>
+                           <p>Upload a video link and Sentiment Analyzer Pro will analyze either the video transcript or the top comments and report back the sentiment statistics.</p>
+                        </div>
+                     </div>
                      </div>
                   </div>
                 </div>
@@ -312,21 +323,13 @@
                        <div class="section-heading">
                            <h2 class="section-title">Text Analysis</h2>
                            <p class="section-subtitle">Type the text you want to analyze and Sentiment Analyzer Pro will report back the sentiments.</p>
-                           
-                           <!-- Single Text Analysis -->
-                           <form action="{% url 'text analysis' %}" method="post" enctype="multipart/form-data">
-                               {% csrf_token %}
-                               <label for="textField" class="form-label">Write here:</label>
-                               <input type="textField" id="text" class="line-edit" name="textField" required>
-                               <button type="submit" id="myButton2" class="button">Analyze Single Text</button>
-                           </form>
            
                            <!-- Batch Text Analysis -->
                            <form action="{% url 'batch_text_analysis' %}" method="post" enctype="multipart/form-data" class="mt-4">
                                {% csrf_token %}
-                               <label for="batchTextField" class="form-label">Multiple Texts (one per line):</label>
+                               <label for="batchTextField" class="form-label">Enter Text Here</label>
                                <textarea id="batchTextField" class="line-edit" name="batchTextField" rows="5" required></textarea>
-                               <button type="submit" id="batchButton" class="button">Analyze Multiple Texts</button>
+                               <button type="submit" id="batchButton" class="button">Analyze Text</button>
                            </form>
                        </div>
                    </div>
@@ -422,6 +425,40 @@
                   </div>
                </div>
             </section>
+
+            <section id="youtube" class="scrollto clearfix">
+                <div class="row no-padding-bottom clearfix">
+                   <div class="col-1">
+                      <div class="section-heading">
+                         <h2 class="section-title">YouTube Analysis</h2>
+                         <p class="section-subtitle">Paste the YouTube URL and Sentiment Analyzer Pro will analyze the either the video or its comments and report back the sentiments.</p>
+                         <!-- <form action = "{% url "youtube transcript analysis" %}" method = "post">
+                         {% csrf_token %}
+                         <label for="vidlink" class="form-label">Paste YouTube URL:</label>
+                         <input type="text" id="vidlink" class="line-edit" name="vidlink" required>
+                         <button type="submit" id = "myButton"class="button">Analyze Video Transcript</button>
+                         <button type="submit" id = "myButton"class="button">Analyze Comments</button>
+                         <div id="message" class="hidden">Wait till the results are generated.</div>
+                         </form> -->
+                         <form action = "{% url "youtube transcript analysis" %}" method = "post">
+                            {% csrf_token %}
+                            <label for="vidlink_transcript" class="form-label">Paste YouTube URL:</label>
+                            <input type="text" id="vidlink_transcript" class="line-edit" name="vidlink" required>
+                            <button type="submit" class="button">Analyze Video Transcript</button>
+                            <div id="message_transcript" class="hidden">Wait till the transcript results are generated.</div>
+                        </form>
+                        
+                        <form action = "{% url "youtube comments analysis" %}" method = "post">
+                            {% csrf_token %}
+                            <label for="vidlink_comments" class="form-label">Paste YouTube URL:</label>
+                            <input type="text" id="vidlink_comments" class="line-edit" name="vidlink" required>
+                            <button type="submit" class="button">Analyze Comments</button>
+                            <div id="message_comments" class="hidden">Wait till the comment results are generated.</div>
+                        </form>
+                      </div>
+                   </div>
+                </div>
+             </section>
             
          </html>
          {% include 'realworld/footer.html' %}
@@ -533,3 +570,33 @@
       </script>
    </body>
 </html>
+<style>
+@media (max-width: 768px) {
+  .banner-toggle-btn {
+    background-color: #e0674e;
+    color: white;
+    border: none;
+    padding: 8px 16px;
+    margin-bottom: 12px;
+    border-radius: 5px;
+    font-weight: bold;
+    cursor: pointer;
+  }
+  .banner-text-wrapper {
+    display: none;
+    transition: opacity 0.3s ease-in-out;
+  }
+  .banner-text-wrapper.active {
+    display: block;
+  }
+}
+</style>
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+  const toggleBtn = document.getElementById("toggleBannerText");
+  const textBox = document.querySelector(".banner-text-wrapper");
+  toggleBtn?.addEventListener("click", function () {
+    textBox?.classList.toggle("active");
+  });
+});
+</script>

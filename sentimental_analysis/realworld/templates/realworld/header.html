@@ -1,45 +1,74 @@
-<!-- filepath: /Users/mdjakaria/CSC510/Sentimental-Analyzer-Pro/sentimental_analysis/realworld/templates/realworld/header.html -->
-<!-- <header id="banner" class="scrollto clearfix" data-enllax-ratio=".5"> -->
-<div id="header" class="nav-collapse navbar">
-   <div class="row clearfix">
-      <div class="col-1">
-         <aside>
-            <ul class="social-icons">
-               <li><a href="/#about">About</a></li>
-               <li><a href="/#gallery">Product Analysis</a></li>
-               <li><a href="/#services">Image Analysis</a></li>
-               <li><a href="/#news">News Analysis</a></li>
-               <li><a href="/#live-speech">Live Speech</a></li>
-               <li><a href="/#text">Text Analysis</a></li>
-               <li><a href="/#batchTextField">Batch Analysis</a></li>
-               <li><a href="/#document">Doc. Analysis</a></li>
-               <li><a href="/#audio">Audio Analysis</a></li>
-               <select name="social" id="media" onchange="location.href = this.value;">
-                  <option value="/#facebook">Social Media</option>
-                  <option value="/#facebook">Facebook</option>
-                  <option value="/#twitter">Twitter</option>
-                  <option value="/#reddit">Reddit</option>
-               </select>
-               {% if user.is_authenticated %}
-                  <li style="color: black; position: relative;">
-                     <div class="dropdown">
-                        <a href="#" id="username-link" class="dropbtn">Welcome, {{ user.username }}</a>
-                        <div class="dropdown-content">
-                           <a href="{% url 'profile' %}">Profile</a>
-                           <a href="{% url 'history' %}">History</a>
-                           <a href="{% url 'settings' %}">Settings</a>
-                           <a href="{% url 'logout' %}">Logout</a>
-                        </div>
-                     </div>
-                  </li>
-               {% else %}
-                  <li><a href="{% url 'login' %}">Login</a></li>
-               {% endif %}
-            </ul>
-         </aside>
-         <div id="nav-trigger"><span></span></div>
-         <nav id="nav-mobile"></nav>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  {% load static %}
+  <title>Sentiment Analyzer Pro</title>
+</head>
+<body>
+
+<nav class="navbar">
+  <div class="navbar-brand">Sentiment Analyzer Pro</div>
+  <button class="navbar-toggle" onclick="toggleNavbar()">☰</button>
+  <div class="navbar-links" id="navbar-links">
+    <a href="/#about"  onclick="closeNavbar()">About</a>
+    <div class="dropdown">
+      <button class="dropbtn" onclick="toggleDropdown(event)">Analysis</button>
+      <div class="dropdown-content">
+        <a href="/#gallery" onclick="closeNavbar()">Product Analysis</a>
+        <a href="/#services" onclick="closeNavbar()">Image Analysis</a>
+        <a href="/#news" onclick="closeNavbar()">News Analysis</a>
+        <a href="/#live-speech" onclick="closeNavbar()">Live Speech</a>
+        <a href="/#text" onclick="closeNavbar()">Text Analysis</a>
+        <a href="/#batchTextField" onclick="closeNavbar()">Batch Analysis</a>
+        <a href="/#document" onclick="closeNavbar()">Doc. Analysis</a>
+        <a href="/#audio" onclick="closeNavbar()">Audio Analysis</a>
       </div>
-   </div>
-</div>
-<!-- </header> -->
+    </div>
+    <div class="dropdown">
+      <button class="dropbtn" onclick="toggleDropdown(event)">Social Media</button>
+      <div class="dropdown-content">
+        <a href="/#facebook" onclick="closeNavbar()">Facebook</a>
+        <a href="/#twitter" onclick="closeNavbar()">Twitter</a>
+        <a href="/#reddit" onclick="closeNavbar()">Reddit</a>
+        <a href="/#youtube" onclick="closeNavbar()">Youtube</a>
+      </div>
+    </div>
+    <div class="dropdown">
+      <button class="dropbtn" onclick="toggleDropdown(event)">Welcome, {{ user.username }}!</button>
+      <div class="dropdown-content">
+        <a href="{% url 'profile' %}" onclick="closeMenu()">Profile</a>
+                <a href="{% url 'history' %}" onclick="closeMenu()">History</a>
+                <a href="{% url 'settings' %}" onclick="closeMenu()">Settings</a>
+                <a href="{% url 'logout' %}" onclick="closeMenu()">Logout</a>
+      </div>
+    </div>
+  </div>
+</nav>
+
+<script>
+function toggleNavbar() {
+  const links = document.getElementById('navbar-links');
+  links.classList.toggle('active');
+}
+
+function closeNavbar() {
+  document.getElementById('navbar-links').classList.remove('active');
+  document.querySelectorAll('.dropdown-content').forEach(d => d.classList.remove('show'));
+}
+
+function toggleDropdown(event) {
+  event.stopPropagation();
+  closeNavbar();
+  const dropdown = event.currentTarget.nextElementSibling;
+  dropdown.classList.toggle('show');
+}
+
+document.addEventListener('click', () => {
+  document.querySelectorAll('.dropdown-content').forEach(d => d.classList.remove('show'));
+});
+</script>
+
+</body>
+</html>

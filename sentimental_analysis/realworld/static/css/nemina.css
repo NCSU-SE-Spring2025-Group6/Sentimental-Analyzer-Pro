@@ -4,13 +4,16 @@ body {
   padding: 0;
 }
 
-#banner {
+#banner { 
   position: relative;
-  background: url("../images/banner-images/h1.jpg") no-repeat;
-  background-position: 70% 50% !important;
+  /* background: url("../images/banner-images/h1.jpg") no-repeat; */
+  /* background-position: 70% 50% !important; */
   color: #333;
-  padding: 20px;
+  /* padding: 20px; */
   text-align: left;
+  background-color: white;
+  margin: 0 auto;
+  max-width: 1200px;
 }
 
 #banner-content.row {
@@ -45,14 +48,12 @@ body {
   color: #b24020;
 }
 
-.bgcol {
-  background-color: #f1ece5;
+section {
+  padding: 0 2rem;
+  padding-bottom: 1rem;
 }
 
-#news,
-#text,
-#live-speech,
-#twitter {
+section:nth-child(odd) {
   background-color: #f1ece5;
 }
 
@@ -70,9 +71,9 @@ body {
 /* Apply styles to .navbar */
 
 .navbar {
-  background-color: #f1ece5 !important;
+  background-color:#d96b4f!important;
   color: white;
-  padding: 5px 5px;
+  padding: 1rem 2rem;
   position: fixed;
   width: 100%;
   top: 0;
@@ -118,6 +119,15 @@ body {
 .navbar li a:active {
   background-color: #fff;
   color: #b24020;
+}
+
+.navbar-links > * {
+  padding: 0.5rem 0.75rem;
+  border-radius: 10px;
+}
+
+.navbar-links > *:hover {
+  background-color: #eb8b73;
 }
 
 #pro {

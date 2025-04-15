@@ -85,7 +85,7 @@
   <body>
     
     <h1 style="margin: auto; text-align: center; font-family: Ranchers;">{{ note }}</h1>
-    <form action="{% url 'batch_analysis' %}" method="post" enctype="multipart/form-data">
+    <form action="{% url 'batch_text_analysis' %}" method="post" enctype="multipart/form-data">
         {% csrf_token %}
         <label for="batchTextField"></label>
         <div class="container" style="width: 100%;">
@@ -95,7 +95,7 @@
                 name="batchTextField" 
                 rows="10" 
                 cols="50"
-                placeholder="Enter multiple texts, one per line"></textarea>
+                placeholder="Enter text here"></textarea>
             <br>
             <br>
             <button class="btn btn-primary btn-lg" 

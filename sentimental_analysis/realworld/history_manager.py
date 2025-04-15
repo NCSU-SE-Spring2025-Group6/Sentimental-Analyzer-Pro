@@ -323,6 +323,34 @@ def store_reddit_data(request, data):
     with open(file_path, 'w') as json_file:
         json.dump(existing_data, json_file, indent=4)
 
+def store_youtube_data(request, data):
+    # Get the username of the current user
+    user = get_user(request)
+    if user.is_authenticated:
+        username = user.username
+    else:
+        username = "Anonymous"
+    print(f"Username: {username}")
+
+    # Create storage for the user if it doesn't exist
+    create_storage(username)
+
+    # Create a JSON file with the username and save data along with timestamp
+    timestamp = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+    file_path = os.path.join(directory_path, f"{username}.json")
+    # Load the existing data from the JSON file
+    with open(file_path, 'r') as json_file:
+        existing_data = json.load(json_file)
+
+    # Update the "Reddit" section with the new data
+    if "Youtube" not in existing_data:
+        existing_data["Youtube"] = {}
+    existing_data["Youtube"][timestamp] = data
+
+    # Save the updated data back to the JSON file
+    with open(file_path, 'w') as json_file:
+        json.dump(existing_data, json_file, indent=4)
+
 
 def store_product_analysis(request, data):
     # Get the username of the current user
@@ -357,6 +385,7 @@ def store_product_analysis(request, data):
             "Facebook": {},
             "Twitter": {},
             "Reddit": {},
+            "Youtube": {},
         }
 
     # Update the "Product Analysis" section with the new data

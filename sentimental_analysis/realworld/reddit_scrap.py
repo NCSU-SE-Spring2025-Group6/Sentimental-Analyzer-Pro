@@ -2,6 +2,7 @@ from nltk.sentiment.vader import SentimentIntensityAnalyzer
 import praw
 import nltk
 import matplotlib
+import os
 matplotlib.use('Agg')  # Use a non-GUI backend for macOS or server environments
 
 
@@ -49,11 +50,11 @@ def fetch_reddit_post(post_url):
     Fetch the content of a specific Reddit post using its URL.
     """
     reddit = praw.Reddit(
-        client_id='AF9XaDY8GlUIhRq95N2oOA',
+        client_id=os.environ.get('REDDIT_CLIENT_ID'),
         # Replace with your Reddit API client ID
-        client_secret='op-VwMxSOaIOtf-xpAgO23CZudiJDA',
+        client_secret=os.environ.get('REDDIT_CLIENT_SECRET'),
         # Replace with your Reddit API client secret
-        user_agent='reddit_sentiment_analysis:v1.0 (by u/Material-Star-1043)'
+        user_agent=os.environ.get('REDDIT_USER_AGENT')
         # Replace with your user agent
     )
 
